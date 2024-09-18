@@ -8,6 +8,7 @@
 #'
 #' @importFrom shiny NS tagList sliderInput
 #' @importFrom bslib card
+#' @importFrom gargoyle trigger
 #'
 mod_settings_ui <- function(id) {
   ns <- shiny::NS(id)
@@ -41,6 +42,8 @@ mod_settings_server <- function(id, r6){
       print(r6)
       r6$n <- input$slider
       print(r6)
+
+      gargoyle::trigger("r6_settings")
     })
 
   })

@@ -1,6 +1,6 @@
 Package: testR6
 Title: Test using R6 object
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person("Rico", "Derks", , "r.j.e.derks@lumc.nl", role = c("aut", "cre"))
 Description: Test using R6 object.
@@ -8,6 +8,7 @@ License: GPL (>= 3)
 Imports: 
     bslib,
     config,
+    gargoyle,
     ggplot2,
     golem,
     R6,

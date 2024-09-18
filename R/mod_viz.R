@@ -23,6 +23,7 @@ mod_viz_ui <- function(id) {
 #' viz Server Functions
 #'
 #' @importFrom shiny renderPlot req
+#' @importFrom gargoyle watch
 #' @importFrom stats rnorm
 #' @importFrom ggplot2 ggplot aes geom_histogram .data
 #'
@@ -32,10 +33,9 @@ mod_viz_server <- function(id, r6){
     ns <- session$ns
 
     output$hist <- shiny::renderPlot({
-      # shiny::req(r6)  # plot is not updating
-      shiny::req(r6$n)  # plot is not updating
-      # for some reason it doesn't see that r6$n gets updated in the settings module
+      shiny::req(r6)
 
+      gargoyle::watch("r6_settings")
 
       my_data <- data.frame(x = stats::rnorm(n = 1000))
 
