@@ -9,3 +9,11 @@ Install with:
 ``` r
 remotes::install_github("ricoderks/testR6")
 ```
+
+The version in **main** will not work. It will not update the graph.
+
+The version in the **solution** branch works. Install with:
+
+``` r
+remotes::install_github("ricoderks/testR6@solution")
+```
