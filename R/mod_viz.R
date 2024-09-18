@@ -25,6 +25,7 @@ mod_viz_ui <- function(id) {
 #' @importFrom shiny renderPlot req
 #' @importFrom stats rnorm
 #' @importFrom ggplot2 ggplot aes geom_histogram .data
+#' @importFrom utils head
 #'
 #' @noRd
 mod_viz_server <- function(id, r6){
@@ -32,19 +33,17 @@ mod_viz_server <- function(id, r6){
     ns <- session$ns
 
     output$hist <- shiny::renderPlot({
-      # shiny::req(r6)  # plot is not updating
-      shiny::req(r6$n)  # plot is not updating
-      # for some reason it doesn't see that r6$n gets updated in the settings module
+      shiny::req(r6)
 
+      my_data <- r6()$getData()
 
-      my_data <- data.frame(x = stats::rnorm(n = 1000))
-
-      print("Viz module")
-      print(r6)
+      print(paste0("Viz module ", id))
+      print(r6()$getN())
+      print(utils::head(my_data))
 
       my_data |>
         ggplot2::ggplot(ggplot2::aes(x = .data$x)) +
-        ggplot2::geom_histogram(bins = r6$n)
+        ggplot2::geom_histogram(bins = r6()$getN())
     })
 
   })

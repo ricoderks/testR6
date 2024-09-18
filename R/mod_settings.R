@@ -34,13 +34,24 @@ mod_settings_server <- function(id, r6){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
+    # this will not give any plot
+    # shiny::observe({
+    #   shiny::req(r6)
+    #
+    #   r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
+    # })
+
     shiny::observeEvent(input$slider, {
       shiny::req(r6)
 
+      # this is a crappy solution
+      if(is.null(r6()$getN())) {
+        r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
+      }
       print("Settings module:")
-      print(r6)
-      r6$n <- input$slider
-      print(r6)
+      print(paste0("Before: ", r6()$getN()))
+      r6()$changeN(input$slider)
+      print(paste0("After: ", r6()$getN()))
     })
 
   })
