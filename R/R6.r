@@ -8,6 +8,7 @@ testR6 = R6::R6Class(
     },
     #-------------------------------------------------------- general stuff ----
     name = NA,
-    n = NA
+    n = NA,
+    data = NA
   )
 )

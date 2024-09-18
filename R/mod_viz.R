@@ -32,19 +32,16 @@ mod_viz_server <- function(id, r6){
     ns <- session$ns
 
     output$hist <- shiny::renderPlot({
-      # shiny::req(r6)  # plot is not updating
-      shiny::req(r6$n)  # plot is not updating
-      # for some reason it doesn't see that r6$n gets updated in the settings module
+      shiny::req(r6)  # plot is not updating
 
-
-      my_data <- data.frame(x = stats::rnorm(n = 1000))
+      my_data <- r6$r$data
 
       print("Viz module")
-      print(r6)
+      print(r6$r)
 
       my_data |>
         ggplot2::ggplot(ggplot2::aes(x = .data$x)) +
-        ggplot2::geom_histogram(bins = r6$n)
+        ggplot2::geom_histogram(bins = r6$r$n)
     })
 
   })

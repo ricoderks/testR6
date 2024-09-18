@@ -34,13 +34,19 @@ mod_settings_server <- function(id, r6){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
+    shiny::observe({
+      shiny::req(r6)
+
+      r6$r$data <- data.frame(x = stats::rnorm(n = 1000))
+    })
+
     shiny::observeEvent(input$slider, {
       shiny::req(r6)
 
       print("Settings module:")
-      print(r6)
-      r6$n <- input$slider
-      print(r6)
+      print(r6$r)
+      r6$r$n <- input$slider
+      print(r6$r)
     })
 
   })

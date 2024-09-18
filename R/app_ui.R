@@ -21,7 +21,8 @@ app_ui <- function(request) {
       ),
       bslib::nav_panel(
         title = "Visualization",
-        mod_viz_ui(id = "viz")
+        mod_viz_ui(id = "viz"),
+        mod_viz_ui(id = "viz1")
       )
     )
   )
