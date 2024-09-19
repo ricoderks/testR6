@@ -14,12 +14,28 @@ mod_settings_ui <- function(id) {
   shiny::tagList(
     bslib::card(
       shiny::sliderInput(
-        inputId = ns("slider"),
+        inputId = ns("slider1"),
         label = "Set number of bins:",
         min = 0,
         max = 100,
         step = 1,
-        value = 50
+        value = 10
+      ),
+      shiny::sliderInput(
+        inputId = ns("slider2"),
+        label = "Set number of bins:",
+        min = 0,
+        max = 100,
+        step = 1,
+        value = 60
+      ),
+      shiny::sliderInput(
+        inputId = ns("slider3"),
+        label = "Set number of bins:",
+        min = 0,
+        max = 100,
+        step = 1,
+        value = 33
       )
     )
   )
@@ -30,7 +46,7 @@ mod_settings_ui <- function(id) {
 #' @importFrom shiny observeEvent req
 #'
 #' @noRd
-mod_settings_server <- function(id, r6){
+mod_settings_server <- function(id, r6, r){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
@@ -41,17 +57,32 @@ mod_settings_server <- function(id, r6){
     #   r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
     # })
 
-    shiny::observeEvent(input$slider, {
+    shiny::observeEvent(input$slider1, {
       shiny::req(r6)
 
-      # this is a crappy solution
-      if(is.null(r6()$getN())) {
-        r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
-      }
-      print("Settings module:")
-      print(paste0("Before: ", r6()$getN()))
-      r6()$changeN(input$slider)
-      print(paste0("After: ", r6()$getN()))
+      print("Settings module (slider 1):")
+      print(paste0("Before: ", r6()$getN1()))
+      r6()$changeN1(input$slider1)
+      print(paste0("After: ", r6()$getN1()))
+    })
+
+
+    shiny::observeEvent(input$slider2, {
+      shiny::req(r6)
+
+      print("Settings module (slider 2):")
+      print(paste0("Before: ", r6()$getN2()))
+      r6()$changeN2(input$slider2)
+      print(paste0("After: ", r6()$getN2()))
+    })
+
+    shiny::observeEvent(input$slider3, {
+      shiny::req(r)
+
+      print("Settings module (slider 3):")
+      print(paste0("Before: ", r$n))
+      r$n <- input$slider3
+      print(paste0("After: ", r$n))
     })
 
   })

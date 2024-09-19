@@ -1,11 +1,14 @@
 #' @importFrom R6 R6Class
 #'
+
+set.seed(123)
 testR6 = R6::R6Class(
   classname = "testR6",
   private = list(
     name = "",
-    n = NULL,
-    data = NULL, # data.frame(x = stats::rnorm(n = 1000)),
+    n1 = NULL,
+    n2 = NULL,
+    data = data.frame(x = stats::rnorm(n = 1000)),
     reactiveDep = NULL,
     reactiveExpr = NULL,
     invalidate = function() {
@@ -32,12 +35,19 @@ testR6 = R6::R6Class(
       private$reactiveExpr
     },
     #-------------------------------------------------------------------- n ----
-    changeN = function(newN) {
-      private$n <- newN
+    changeN1 = function(newN) {
+      private$n1 <- newN
       private$invalidate()
     },
-    getN = function() {
-      private$n
+    getN1 = function() {
+      private$n1
+    },
+    changeN2 = function(newN) {
+      private$n2 <- newN
+      private$invalidate()
+    },
+    getN2 = function() {
+      private$n2
     },
     #----------------------------------------------------------------- data ----
     changeData = function(newData) {
