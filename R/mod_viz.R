@@ -14,6 +14,8 @@ mod_viz_ui <- function(id) {
   shiny::tagList(
     bslib::card(
       shiny::h3(paste0("Module: ", id)),
+      # shiny::actionButton(inputId = ns("change_data"),
+      #                     label = "Modify data"),
       bslib::layout_column_wrap(
         width = 1 / 3,
         shiny::plotOutput(
@@ -42,18 +44,27 @@ mod_viz_server <- function(id, r6, r){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
+    # shiny::observeEvent(input$change_data, {
+    #   shiny::req(r6)
+    #
+    #   print("new data 1")
+    #   r6()$changeData(data.frame(x = stats::rnorm(n = 10000)))
+    #   print("new data 2")
+    # })
+
     output$hist1 <- shiny::renderPlot({
       shiny::req(r6)
 
       my_data <- r6()$getData()
+      # my_data <- r6$data
 
       print(paste0("Viz module (slider 1): ", id))
-      print(r6()$getN1())
+      print(r6()$n1()$getN1())
       print(utils::head(my_data))
 
       my_data |>
         ggplot2::ggplot(ggplot2::aes(x = .data$x)) +
-        ggplot2::geom_histogram(bins = r6()$getN1()) +
+        ggplot2::geom_histogram(bins = r6()$n1()$getN1()) +
         ggplot2::labs(title = "Slider 1")
     })
 
@@ -63,12 +74,12 @@ mod_viz_server <- function(id, r6, r){
       my_data <- r6()$getData()
 
       print(paste0("Viz module (slider 2):", id))
-      print(r6()$getN2())
+      print(r6()$n2()$getN2())
       print(utils::head(my_data))
 
       my_data |>
         ggplot2::ggplot(ggplot2::aes(x = .data$x)) +
-        ggplot2::geom_histogram(bins = r6()$getN2()) +
+        ggplot2::geom_histogram(bins = r6()$n2()$getN2()) +
         ggplot2::labs(title = "Slider 2")
     })
 

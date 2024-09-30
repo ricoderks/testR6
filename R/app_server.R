@@ -11,7 +11,7 @@ app_server <- function(input, output, session) {
     data = data.frame(x = stats::rnorm(n = 1000))
   )
 
-  r6 <- testR6$new(name = "test1")$reactive()
+  r6 <- testR6$new(name = "data")$reactive()
 
   # this will not give any plot
   # shiny::observe({

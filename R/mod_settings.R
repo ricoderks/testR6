@@ -13,6 +13,8 @@ mod_settings_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     bslib::card(
+      shiny::actionButton(inputId = ns("change_data"),
+                          label = "Modify data"),
       shiny::sliderInput(
         inputId = ns("slider1"),
         label = "Set number of bins:",
@@ -57,13 +59,21 @@ mod_settings_server <- function(id, r6, r){
     #   r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
     # })
 
+    shiny::observeEvent(input$change_data, {
+      shiny::req(r6)
+
+      print("new data 1")
+      r6()$changeData(data.frame(x = stats::rnorm(n = 10000)))
+      print("new data 2")
+    })
+
     shiny::observeEvent(input$slider1, {
       shiny::req(r6)
 
       print("Settings module (slider 1):")
-      print(paste0("Before: ", r6()$getN1()))
-      r6()$changeN1(input$slider1)
-      print(paste0("After: ", r6()$getN1()))
+      print(paste0("Before: ", r6()$n1()$getN1()))
+      r6()$n1()$changeN1(input$slider1)
+      print(paste0("After: ", r6()$n1()$getN1()))
     })
 
 
@@ -71,9 +81,9 @@ mod_settings_server <- function(id, r6, r){
       shiny::req(r6)
 
       print("Settings module (slider 2):")
-      print(paste0("Before: ", r6()$getN2()))
-      r6()$changeN2(input$slider2)
-      print(paste0("After: ", r6()$getN2()))
+      print(paste0("Before: ", r6()$n2()$getN2()))
+      r6()$n2()$changeN2(input$slider2)
+      print(paste0("After: ", r6()$n2()$getN2()))
     })
 
     shiny::observeEvent(input$slider3, {
