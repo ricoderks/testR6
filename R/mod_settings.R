@@ -52,14 +52,8 @@ mod_settings_server <- function(id, r6, r){
   moduleServer(id, function(input, output, session){
     ns <- session$ns
 
-    # this will not give any plot
-    # shiny::observe({
-    #   shiny::req(r6)
-    #
-    #   r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
-    # })
-
     shiny::observeEvent(input$change_data, {
+      # change the data in the R6 object
       shiny::req(r6)
 
       print("new data 1")
