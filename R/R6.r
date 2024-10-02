@@ -1,13 +1,19 @@
 #' @importFrom R6 R6Class
 #'
-testR6 = R6::R6Class(
-  classname = "testR6",
+Person = R6::R6Class(
+  classname = "Person",
   public = list(
     initialize = function(name) {
       self$name <- name
     },
     #-------------------------------------------------------- general stuff ----
-    name = NA,
-    n = NA
+    name = "",
+    #-------------------------------------------------------------- methods ----
+    print = function() {
+      cat("Person:", self$name, "\n")
+    },
+    changeName = function(newName) {
+      self$name <- newName
+    }
   )
 )

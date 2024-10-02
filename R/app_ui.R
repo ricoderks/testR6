@@ -4,7 +4,7 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @importFrom utils packageVersion
-#' @importFrom bslib page_navbar nav_panel
+#' @importFrom bslib page_navbar nav_panel card card_header card_body
 #'
 #' @noRd
 app_ui <- function(request) {
@@ -16,12 +16,20 @@ app_ui <- function(request) {
       title = paste0("CPM - testR6 | v", utils::packageVersion("testR6")),
       underline = TRUE,
       bslib::nav_panel(
-        title = "Settings",
-        mod_settings_ui(id = "settings")
-      ),
-      bslib::nav_panel(
-        title = "Visualization",
-        mod_viz_ui(id = "viz")
+        "Nav panel",
+        bslib::card(
+          bslib::card_header("test R6"),
+          bslib::card_body(
+            shiny::actionButton(
+              inputId = "change_name",
+              label = "Change to Henk"
+            ),
+            shiny::p("My name is:"),
+            shiny::textOutput(
+              outputId = "person_name"
+            )
+          )
+        )
       )
     )
   )
