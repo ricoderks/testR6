@@ -3,22 +3,18 @@
 #' @param input,output,session Internal parameters for {shiny}.
 #'     DO NOT REMOVE.
 #' @import shiny
+#'
 #' @noRd
 app_server <- function(input, output, session) {
   set.seed(123)
+  # define petite r, for communication between modules
   r <- reactiveValues(
     n = NULL,
     data = data.frame(x = stats::rnorm(n = 1000))
   )
 
+  # initialize R6 object, for communication between modules
   r6 <- testR6$new(name = "data")$reactive()
-
-  # this will not give any plot
-  # shiny::observe({
-  #   shiny::req(r6)
-  #
-  #   r6()$changeData(data.frame(x = stats::rnorm(n = 1000)))
-  # })
 
   mod_settings_server(id = "settings",
                       r6 = r6,
